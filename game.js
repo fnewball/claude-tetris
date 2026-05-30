@@ -4,16 +4,89 @@ const COLS = 10;
 const ROWS = 20;
 const BLOCK = 30;
 
-const COLORS = [
-  null,
-  '#4dd0e1', // I - cyan
-  '#ffd54f', // O - yellow
-  '#ba68c8', // T - purple
-  '#81c784', // S - green
-  '#e57373', // Z - red
-  '#7986cb', // J - indigo
-  '#ffb74d', // L - orange
-];
+const LINE_SCORES = [0, 100, 300, 500, 800];
+
+const SKINS = {
+  retro: {
+    colors: [null, '#4dd0e1', '#ffd54f', '#ba68c8', '#81c784', '#e57373', '#7986cb', '#ffb74d'],
+    drawBlock(ctx, x, y, colorIdx, size, alpha) {
+      if (!colorIdx) return;
+      const color = SKINS.retro.colors[colorIdx];
+      ctx.globalAlpha = alpha ?? 1;
+      ctx.fillStyle = color;
+      ctx.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.12)';
+      ctx.fillRect(x * size + 1, y * size + 1, size - 2, 4);
+      ctx.globalAlpha = 1;
+    },
+  },
+  neon: {
+    colors: [null, '#00fff7', '#ffe600', '#d400ff', '#00ff6a', '#ff2d55', '#4d79ff', '#ff8c00'],
+    drawBlock(ctx, x, y, colorIdx, size, alpha) {
+      if (!colorIdx) return;
+      const color = SKINS.neon.colors[colorIdx];
+      ctx.globalAlpha = alpha ?? 1;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 12;
+      ctx.fillStyle = color;
+      ctx.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = 'transparent';
+      ctx.fillStyle = 'rgba(255,255,255,0.08)';
+      ctx.fillRect(x * size + 1, y * size + 1, size - 2, 4);
+      ctx.globalAlpha = 1;
+    },
+  },
+  pastel: {
+    colors: [null, '#a8e6ef', '#fff4b2', '#ddb6f2', '#b8e8bb', '#f5b8b8', '#b8c4f5', '#ffd9a8'],
+    drawBlock(ctx, x, y, colorIdx, size, alpha) {
+      if (!colorIdx) return;
+      const color = SKINS.pastel.colors[colorIdx];
+      ctx.globalAlpha = alpha ?? 1;
+      ctx.fillStyle = color;
+      ctx.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillRect(x * size + 4, y * size + 4, size - 8, size - 8);
+      ctx.globalAlpha = 1;
+    },
+  },
+  pixel: {
+    colors: [null, '#4dd0e1', '#ffd54f', '#ba68c8', '#81c784', '#e57373', '#7986cb', '#ffb74d'],
+    drawBlock(ctx, x, y, colorIdx, size, alpha) {
+      if (!colorIdx) return;
+      const color = SKINS.pixel.colors[colorIdx];
+      ctx.globalAlpha = alpha ?? 1;
+      ctx.fillStyle = color;
+      ctx.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      const dotSize = 3;
+      const gap = Math.floor((size - 2) / 4);
+      for (let dr = 0; dr < 3; dr++) {
+        for (let dc = 0; dc < 3; dc++) {
+          ctx.fillRect(
+            x * size + 1 + gap * dc + Math.floor(gap / 2) - 1,
+            y * size + 1 + gap * dr + Math.floor(gap / 2) - 1,
+            dotSize, dotSize
+          );
+        }
+      }
+      ctx.globalAlpha = 1;
+    },
+  },
+};
+
+const _storedSkin = localStorage.getItem('tetrisSkin');
+let currentSkinKey = (_storedSkin && _storedSkin in SKINS) ? _storedSkin : 'retro';
+
+function setSkin(key) {
+  currentSkinKey = key;
+  localStorage.setItem('tetrisSkin', key);
+  document.body.className = 'skin-' + key;
+  document.querySelectorAll('.skin-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.skin === key);
+  });
+  if (current) draw();
+}
 
 const PIECES = [
   null,
@@ -25,8 +98,6 @@ const PIECES = [
   [[6,0,0],[6,6,6],[0,0,0]],                  // J
   [[0,0,7],[7,7,7],[0,0,0]],                  // L
 ];
-
-const LINE_SCORES = [0, 100, 300, 500, 800];
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -157,15 +228,7 @@ function updateHUD() {
 }
 
 function drawBlock(context, x, y, colorIndex, size, alpha) {
-  if (!colorIndex) return;
-  const color = COLORS[colorIndex];
-  context.globalAlpha = alpha ?? 1;
-  context.fillStyle = color;
-  context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
-  // highlight
-  context.fillStyle = 'rgba(255,255,255,0.12)';
-  context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
-  context.globalAlpha = 1;
+  SKINS[currentSkinKey].drawBlock(context, x, y, colorIndex, size, alpha);
 }
 
 function drawGrid() {
@@ -302,3 +365,4 @@ document.addEventListener('keydown', e => {
 restartBtn.addEventListener('click', init);
 
 init();
+setSkin(currentSkinKey);

@@ -150,3 +150,124 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Skin selector ---- */
+.skin-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.skin-btn {
+  flex: 1 1 calc(50% - 4px);
+  background: #22223a;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  color: #aaa;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 5px 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.skin-btn:hover {
+  background: #2e2e50;
+  color: #ddd;
+}
+
+.skin-btn.active {
+  background: #7aa2f7;
+  border-color: #7aa2f7;
+  color: #0f0f17;
+}
+
+/* ---- Neon skin ---- */
+body.skin-neon {
+  background: #000;
+}
+
+body.skin-neon #board {
+  background: #050510;
+  border-color: #1a1a3a;
+  box-shadow: 0 0 60px rgba(0, 200, 255, 0.15);
+}
+
+body.skin-neon .panel {
+  color: #00fff7;
+}
+
+body.skin-neon .label {
+  color: #00a8b0;
+}
+
+body.skin-neon .value {
+  color: #00fff7;
+}
+
+body.skin-neon #next-canvas {
+  background: #050510;
+  border-color: #1a1a3a;
+}
+
+body.skin-neon .skin-btn.active {
+  background: #00fff7;
+  border-color: #00fff7;
+  color: #000;
+}
+
+/* ---- Pastel skin ---- */
+body.skin-pastel {
+  background: #f0eeff;
+}
+
+body.skin-pastel #board {
+  background: #faf8ff;
+  border-color: #d8d0f0;
+  box-shadow: 0 0 40px rgba(180, 160, 220, 0.3);
+}
+
+body.skin-pastel .panel {
+  color: #444;
+}
+
+body.skin-pastel .label {
+  color: #998ec0;
+}
+
+body.skin-pastel .value {
+  color: #7060b8;
+}
+
+body.skin-pastel #next-canvas {
+  background: #faf8ff;
+  border-color: #d8d0f0;
+}
+
+body.skin-pastel kbd {
+  background: #e8e0f8;
+  border-color: #c0b4e0;
+  color: #666;
+}
+
+body.skin-pastel .controls li {
+  color: #888;
+}
+
+body.skin-pastel .skin-btn {
+  background: #e8e0f8;
+  border-color: #c0b4e0;
+  color: #666;
+}
+
+body.skin-pastel .skin-btn:hover {
+  background: #d8cef0;
+}
+
+body.skin-pastel .skin-btn.active {
+  background: #b090e0;
+  border-color: #b090e0;
+  color: #fff;
+}
