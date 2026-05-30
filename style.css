@@ -150,3 +150,155 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Leaderboard (panel) ---- */
+.lb-list {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lb-list li {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 3px 4px;
+  border-radius: 3px;
+  background: #1a1a28;
+}
+
+.lb-list li:nth-child(even) {
+  background: #20202e;
+}
+
+.lb-list .lb-rank {
+  font-family: 'Courier New', Courier, monospace;
+  color: #555570;
+  font-size: 10px;
+}
+
+.lb-list .lb-name {
+  color: #ccc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-list .lb-score {
+  font-family: 'Courier New', Courier, monospace;
+  color: #7aa2f7;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.lb-list li.highlight-row {
+  background: #2a2510 !important;
+  outline: 1px solid #ffd54f;
+}
+
+.lb-list li.highlight-row .lb-rank,
+.lb-list li.highlight-row .lb-name,
+.lb-list li.highlight-row .lb-score {
+  color: #ffd54f;
+}
+
+.lb-empty {
+  font-size: 11px;
+  color: #444460;
+  text-align: center;
+  padding: 4px 0;
+  grid-column: 1 / -1;
+}
+
+#reset-btn {
+  background: transparent;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  color: #666;
+  font-size: 10px;
+  padding: 4px 8px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: border-color 0.15s, color 0.15s;
+  align-self: flex-start;
+}
+
+#reset-btn:hover {
+  border-color: #e57373;
+  color: #e57373;
+}
+
+/* ---- Name form (overlay) ---- */
+.name-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.name-form.hidden {
+  display: none;
+}
+
+#name-input {
+  background: #1a1a28;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 14px;
+  padding: 6px 10px;
+  width: 160px;
+  text-align: center;
+  outline: none;
+  font-family: inherit;
+}
+
+#name-input:focus {
+  border-color: #7aa2f7;
+}
+
+#save-btn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+#save-btn:hover {
+  background: #66bb6a;
+}
+
+/* ---- Overlay leaderboard ---- */
+.overlay-lb {
+  width: 220px;
+}
+
+.overlay-lb.hidden {
+  display: none;
+}
+
+.overlay-lb-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #555570;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.overlay-lb .lb-list li {
+  background: #1a1a28;
+}
+
+.overlay-lb .lb-list li:nth-child(even) {
+  background: #20202e;
+}
